@@ -1,0 +1,124 @@
+# 6.4
+list1 a g f x = if null x then a else (g (f (car x)) (list1 a g f (cdr x)))
+
+Фактически, данная функция представляет собой последовательное выполнение операций:
+- отображение списка x функцией f
+- правоассоциативная свёртка результата предыдущей операции функцией g с начальным значением a
+list1 z0 g f arr = foldr g z0 (map f arr)
+
+Выразим теперь функции length, sumsquares, reverse, identity, sum, product, append, concat, map с использованием list1.
+Воспользуемся определениями:
+I x = x
+K x y = x
+postfix x y = append y (ux)
+ux = x:[] = [x]
+list x y = x:y
+[] - пустой список
+
+Исходные определения функций:
+length a = if null a then 0 else (1 + length (cdr a))
+sumsquares a = if null a then 0 else ((car a)² + sumsquares (cdr a))
+reverse a = if null a then [] else (append (reverse (cdr x)) (ux))
+identity a = a
+sum a = if null a then 0 else ((car a) + (sum (cdr a)))
+product a = if null a then 0 else ((car a) * (sum (cdr a)))
+append x y = if null x then y else (list (car x) (append (cdr x) y))
+concat a = if null a then [] else (append (car a) (concat (cdr a)))
+map f a = if null a then [] else (list (f (car a)) (map f (cdr a)))
+
+Определения с использованием list1:
+length = list1 0 (λx y. x+y) (λx. 1)
+sumsquares = list1 0 (λx y. x+y) (λx. x²)
+reverse = list1 [] postfix I
+identity = list1 [] list I
+sum = list1 0 (λx y. x+y) I
+product = list1 1 (λa b. a×b) I
+append x y = list1 y list I x
+concat = list1 [] append I
+map f = list1 [] list f
+
+Подставим эти параметры в исходное определение, чтобы убедиться в правильности решения:
+length = list1 0 (λx y. x+y) (λx. 1) a = if null a then 0 else (1 + length (cdr a))
+sumsquares a = list1 0 (λx y. x+y) (λx. x²) a = if null a then 0 else ((car a)² + sumsquares (cdr a))
+reverse a = list1 [] postfix I a = if null a then [] else (append (reverse (cdr x)) (ux))
+identity a
+	= list1 [] list I a
+	= if null a then [] else (list (I (car a)) (list1 [] list I (cdr a)))
+	= if null a then a else (list (car a) (list1 [] list I (cdr a)))
+	= a
+sum a = list1 0 (λx y. x+y) I a = if null a then 0 else ((car a) + (sum (cdr a)))
+product a = list1 1 (λa b. a×b) I a = if null a then 1 else ((car a) * (product (cdr a)))
+append x y = list1 y list I x = if null x then y else (list (car x) (append (cdr x) y))
+concat a = list1 [] append I x a = if null a then [] else (append (car a) (concat (cdr a)))
+map f a = list1 [] list f x a = if null a then [] else (list (f (car a)) (map f (cdr a)))
+
+Проверка примеров:
+1. sum [1..4] = 10
+Пусть (+) = (λx y. x+y):
+list1 0 (+) I [1..4]
+if null [1..4] then 0 else ((+) (car [1..4]) (list1 0 (+) I (cdr [1..4])))
+((+) 1 (list1 0 (+) I [2..4]))
+((+) 1 (if null [2..4] then 0 else ((+) (car [2..4]) (list1 0 (+) I (cdr [2..4]))))
+((+) 1 ((+) 2 (list1 0 (+) I [3..4])))
+((+) 1 ((+) 2 (if null [3, 4] then 0 else ((+) (car [3, 4]) (list1 0 (+) I (cdr [3, 4])))))
+((+) 1 ((+) 2 ((+) 3 (list1 0 (+) I [4])))
+((+) 1 ((+) 2 ((+) 3 (if null [4] then 0 else ((+) (car [4]) (list1 0 (+) I (cdr [4]))))))
+((+) 1 ((+) 2 ((+) 3 ((+) 4 (list1 0 (+) I []))))
+((+) 1 ((+) 2 ((+) 3 ((+) 4 (if null [] then 0 else ((+) (car []) (list1 0 (+) I (cdr [])))))))
+((+) 1 ((+) 2 ((+) 3 ((+) 4 0))))
+((+) 1 ((+) 2 ((+) 3 4)))
+((+) 1 ((+) 2 7))
+((+) 1 9)
+(10)
+
+2. product [1..4] = 24
+Пусть (*) = (λa b. a×b):
+list1 1 (*) I [1..4]
+if null [1..4] then 1 else ((*) (car [1..4]) (list1 1 (*) I (cdr [1..4])))
+((*) 1 (list1 1 (*) I [2..4]))
+((*) 1 (if null [2..4] then 1 else ((*) (car [2..4]) (list1 1 (*) I (cdr [2..4]))))
+((*) 1 ((*) 2 (list1 1 (*) I [3..4])))
+((*) 1 ((*) 2 (if null [3, 4] then 1 else ((*) (car [3, 4]) (list1 1 (*) I (cdr [3, 4])))))
+((*) 1 ((*) 2 ((*) 3 (list1 1 (*) I [4])))
+((*) 1 ((*) 2 ((*) 3 (if null [4] then 1 else ((*) (car [4]) (list1 1 (*) I (cdr [4]))))))
+((*) 1 ((*) 2 ((*) 3 ((*) 4 (list1 1 (*) I []))))
+((*) 1 ((*) 2 ((*) 3 ((*) 4 (if null [] then 1 else ((*) (car []) (list1 1 (*) I (cdr [])))))))
+((*) 1 ((*) 2 ((*) 3 ((*) 4 1))))
+((*) 1 ((*) 2 ((*) 3 4)))
+((*) 1 ((*) 2 12))
+((*) 1 24)
+(24)
+
+3. append [1, 2] [3, 4, 5] = [1..5]
+list1 [3..5] list I [1, 2]
+if null [1, 2] then [3..5] else (list (car [1, 2]) (list1 [3..5] list I (cdr [1, 2])))
+(list 1 (list1 [3..5] list I [2]))
+(list 1 (if null [2] then [3..5] else (list (car [2]) (list1 [3..5] list I (cdr [2])))))
+(list 1 (list 2 (list1 [3..5] list I [])))
+(list 1 (list 2 (if null [] then [3..5] else (list (car []) (list1 [3..5] list I (cdr []))))))
+(list 1 (list 2 ([3..5])))
+(1:(2:([3..5])))
+([1..5])
+
+4. concat [[1, 2], [3, 4], []] = [1..4]
+list1 [] append I [[1, 2], [3, 4], []]
+if null [[1,2],[3,4],[]] then [] else (append (car [[1,2],[3,4],[]]) (list1 [] append I (cdr [[1,2],[3,4],[]])))
+(append [1,2] (list1 [] append I [[3, 4], []]))
+(append [1,2] (append [3,4] (list1 [] append I [[]])))
+(append [1,2] (append [3,4] (if null [[]] then [] else (append (car [[]]) (list1 [] append I (cdr [[]]))))))
+(append [1,2] (append [3,4] (append [] (list1 [] append I []))))
+(append [1,2] (append [3,4] (append [] [])))
+(append [1,2] (append [3,4] []))
+(append [1,2] [3,4])
+([1, 2, 3, 4])
+
+5. map (λx. x²) [1..4] = [1, 4, 9, 16]
+Пусть sq = (λx. x²):
+list1 [] list sq [1..4]
+if null [1..4] then [] else (list (sq (car [1..4])) (list1 [] list sq (cdr [1..4])))
+(list (sq 1) (list1 [] list sq [2..4]))
+(list 1 (list (sq 2) (list1 [] list sq [3..4]))
+(list 1 (list 4 (list 9 (list1 [] list sq [4])))
+(list 1 (list 4 (list 9 (list 16 (list1 [] list sq []))))
+(list 1 (list 4 (list 9 (list 16 [])))
+[1, 4, 9, 16]

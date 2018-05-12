@@ -1,0 +1,11 @@
+# 5.2
+Док-ть:
+S(BBS)(KK)abc = acb
+
+S(BBS)(KK)a bc
+BBSa (KKa)bc
+B(Sa)(KKa)b c
+Sa((KKa)b)c
+ac((KKa)bc)
+ac(Kbc)
+acb

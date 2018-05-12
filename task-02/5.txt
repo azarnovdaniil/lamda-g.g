@@ -1,0 +1,19 @@
+# 2.5
+Y1 = Y0(λy.λf.f(y(f))), Y0 = λf.X(X), X = λx.f(x(x))
+
+Y0 a
+(λf.(λx.f(xx))(λx.f(xx))) a
+(λf = a.(λx.f(xx))(λx.f(xx)))
+( (λx.a(xx)) (λx.a(xx)) )
+(λx.a(xx)) (λx.a(xx))
+a ( (λx.a(xx)) (λx.a(xx)) )
+a ( (λf.(λx.f(xx))(λx.f(xx))) a )
+a (Y0 a)
+
+Y1 a
+Y0 (λyf.f(yf)) a
+(λyf.f(yf)) (Y0 (λyf.f(yf))) a
+a ((Y0 (λyf.f(yf))) a)
+a (Y1 a)
+
+Y1 a = a (Y1 a)
