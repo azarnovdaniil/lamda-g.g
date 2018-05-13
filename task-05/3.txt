@@ -1,0 +1,24 @@
+# 5.3
+Док-ть:
+B(BW(BC))(BB(BB))abcd = a(bc)(bd)
+
+B(BW(BC))((BB(BB)))a bcd
+(BW(BC))(((BB(BB)))a) bcd
+BW(BC)(((BB(BB)))a) bcd
+W((BC)(((BB(BB)))a))b cd
+((BC)(((BB(BB)))a))bb cd
+(BC)(((BB(BB)))a)bb cd
+BC(((BB(BB)))a)b bcd
+C((((BB(BB)))a)b)bc d
+((((BB(BB)))a)b)cb d
+(((BB(BB)))a)bcb d
+((BB(BB)))abcb d
+(BB(BB))abcb d
+BB(BB)a bcbd
+B((BB)a)bc bd
+((BB)a)(bc) bd
+(BB)a(bc) bd
+BBa(bc) bd
+B(a(bc))bd
+(a(bc))(bd)
+a(bc)(bd)

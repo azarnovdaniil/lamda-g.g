@@ -1,0 +1,8 @@
+\xy.xy
+\x.(\y.xy)
+\x.(S(\y.x)(\y.y))
+\x.(S(Kx)I)
+\x.S(Kx)I
+S(\x.S)(\x.Kx)I
+S(KS)(S(\x.Kx)(\x.x))I
+S(KS)(S(KK)(I))I

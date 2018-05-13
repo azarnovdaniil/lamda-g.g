@@ -1,0 +1,13 @@
+# 5.1
+Док-ть:
+S(KS)Kabc = a(bc)
+
+S(KS)Ka bc
+((KS)a)(Ka) bc
+(KS)a(Ka) bc
+KSa (Ka)bc
+S(Ka)bc
+((Ka)d)(bc)
+(Ka)d(bc)
+Kac (bc)
+a(bc)

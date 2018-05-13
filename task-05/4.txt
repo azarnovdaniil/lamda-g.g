@@ -1,0 +1,12 @@
+# 5.1
+Док-ть:
+B(BS)Babcd = a(bd)(cd)
+
+B(BS)Ba bcd
+(BS)(Ba) bcd
+BS(Ba)b cd
+S((Ba)b)cd
+((Ba)b)d(cd)
+(Ba)bd(cd)
+Babd (cd)
+a(bd)(cd)
