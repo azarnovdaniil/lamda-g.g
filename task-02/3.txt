@@ -1,0 +1,18 @@
+# 2.3
+Y = WS(BWB)
+
+WS(BWB)
+S(BWB)(BWB)
+
+Так как S трехместный, добавим a
+
+S(BWB)(BWB)a
+(BWBa)((BWB)a)
+BWBa((BWB)a)
+W(Ba)((BWB)a)
+(Ba)((BWB)a)((BWB)a)
+Ba((BWB)a)((BWB)a)
+a(((BWB)a)((BWB)a))
+a((BWBa)((BWB)a))
+a(S(BWB)(BWB)a)
+a(Ya)
