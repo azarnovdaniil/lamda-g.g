@@ -1,0 +1,13 @@
+# 4.7
+∃*
+
+∃* = B(W(B²(ФP)CΞ))K
+
+∃[a]b:
+
+B(W(B²(ФP)CΞ))K ab
+W(B²(ФP)CΞ)(Ka) b
+B²(ФP)CΞ(Ka)(Ka) b
+ФP(CΞ(Ka))(Ka) b
+P(CΞ(Ka)b)(Kab)
+P(Ξb(Ka))a
