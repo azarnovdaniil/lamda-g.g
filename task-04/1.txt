@@ -1,0 +1,12 @@
+# 4.1
+Ξ
+
+Ξ = C(BCF)I
+
+Ξab:
+
+C(BCF)Iab
+(BCF)aIb
+C(Fa)Ib
+(Fa)bI
+FabI
